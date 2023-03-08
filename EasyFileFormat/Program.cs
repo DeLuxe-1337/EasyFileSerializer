@@ -4,6 +4,12 @@
     {
         public int magic;
         public byte[] code;
+        public OtherFormat of;
+    }
+    private struct OtherFormat : FileSerializer
+    {
+        public int magic;
+        public string something;
     }
 
     private static void Main()
@@ -13,7 +19,7 @@
             FileStream fileStream = File.OpenWrite("out.testformat");
             BinaryWriter binaryWriter = new(fileStream);
 
-            FileSerializer tf = new TestFormat() { magic = 50, code = new byte[] { 50, 40, 30, 20, 10, 5, 0 } };
+            FileSerializer tf = new TestFormat() { magic = 50, code = new byte[] { 50, 40, 30, 20, 10, 5, 0 }, of = new() { magic = 100, something = "hello" } };
             tf.WriteToStream(binaryWriter);
 
             binaryWriter.Flush();

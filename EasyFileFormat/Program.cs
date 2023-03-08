@@ -38,7 +38,7 @@
             BinaryReader binaryReader = new(fileStream);
 
             FileSerializer tf = new TestFormat();
-            tf.ReadFromStream(binaryReader);
+            _ = tf.ReadFromStream(binaryReader);
 
             fileStream.Close();
 

@@ -7,7 +7,7 @@
         foreach (System.Reflection.FieldInfo field in fields)
         {
             object? value = field.GetValue(this);
-            WriteValueToStream(writer, field.FieldType, value);
+            WriteValueToStream(writer, field.FieldType, value!);
         }
     }
 
@@ -102,7 +102,7 @@
         if (type.GetInterfaces().Contains(typeof(FileSerializer)))
         {
             object value = Activator.CreateInstance(type);
-            (value as FileSerializer).ReadFromStream(reader);
+            _ = (value as FileSerializer).ReadFromStream(reader);
             return value;
         }
         else if (type.IsArray)
@@ -112,7 +112,7 @@
             Array array = Array.CreateInstance(elementType!, length);
             for (int i = 0; i < length; i++)
             {
-                array.SetValue(ReadValueFromStream(reader, elementType), i);
+                array.SetValue(ReadValueFromStream(reader, elementType!), i);
             }
             return array;
         }
